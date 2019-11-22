@@ -43,7 +43,7 @@ def main():
     print(myTree)
     plot = id3.make_dot_data()
     plot.render("testTree")
-    predicted = id3.predict(data2, myTree)
+    predicted = id3.predict(data2, myTree, attributes)
     print(predicted)
 
 

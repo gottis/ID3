@@ -40,7 +40,7 @@ class ID3DecisionTreeClassifier:
             self.__dot.edge(str(parentid), str(node['id']))
             nodeString += "\n" + str(parentid) + " -> " + str(node['id'])
 
-        print(nodeString)
+        #print(nodeString)
 
         return
 
@@ -104,6 +104,7 @@ class ID3DecisionTreeClassifier:
     def fit(self, data, attributes, classes):
         labels = self.count_labels(data, classes)
         root = self.new_ID3_node()
+        root['nodes'] = []
         if len(labels.keys()) == 1:
             root['label'] = next(iter(labels.keys()))
             return root
@@ -113,6 +114,10 @@ class ID3DecisionTreeClassifier:
             root['classCounts'] = labels
             return root
         split_attribute, partitions = self.find_split_attribute(data, attributes, classes)
+
+
+
+
         root['attribute'] = split_attribute
         root['samples'] = len(data)
         root['classCounts'] = labels
@@ -122,19 +127,28 @@ class ID3DecisionTreeClassifier:
         del attributes_for_subtree[split_attribute]
 
         for partition in partitions:
-            if len(partition) == 0:
-                leaf = self.new_ID3_node()
-                leaf['label'] = self.most_common_label(labels)
-                leaf['samples'] = len(data)
 
-                self.add_node_to_graph(leaf)
-            else:
+
+            if len(partition) != 0:
                 branch = self.fit(partition, attributes_for_subtree, classes)
-                self.add_node_to_graph(branch)
+                #branch['previous_split'] =
+                root['nodes'].append(branch)
+                self.add_node_to_graph(branch, root['id'])
+
         return root
 
-    def predict(self, data, tree):
+
+
+    def predict(self, data, tree, attributes):
         predicted = list()
 
-        # fill in something more sensible here... root should become the output of the recursive tree creation
         return predicted
+
+
+    def predict(self, node, tree, attributes):
+        if tree['nodes'] == None:
+            return node['label']
+        else:
+            for branch in tree['nodes']:
+                if branch['attribute'] in attributes:
+                    branch
