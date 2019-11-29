@@ -19,27 +19,32 @@ classCounts: {'+': 4, '-': 2}"]
 id: 3
 label: +
 samples: 5
-classCounts: {'+': 4, '-': 1}"]
+classCounts: {'+': 4, '-': 1}
+previous_split: y"]
 	2 -> 3
 	4 [label="
 id: 4
-label: -"]
+label: -
+previous_split: g"]
 	2 -> 4
 	2 [label="
 id: 2
 attribute: color
 samples: 6
-classCounts: {'+': 4, '-': 2}"]
+classCounts: {'+': 4, '-': 2}
+previous_split: r"]
 	1 -> 2
 	5 [label="
 id: 5
-label: +"]
+label: +
+previous_split: i"]
 	1 -> 5
 	1 [label="
 id: 1
 attribute: shape
 samples: 8
-classCounts: {'+': 6, '-': 2}"]
+classCounts: {'+': 6, '-': 2}
+previous_split: s"]
 	0 -> 1
 	6 [label="
 id: 6
@@ -55,26 +60,31 @@ classCounts: {'+': 3, '-': 4}"]
 id: 8
 label: -
 samples: 6
-classCounts: {'+': 2, '-': 4}"]
+classCounts: {'+': 2, '-': 4}
+previous_split: r"]
 	7 -> 8
 	9 [label="
 id: 9
-label: +"]
+label: +
+previous_split: i"]
 	7 -> 9
 	7 [label="
 id: 7
 attribute: shape
 samples: 7
-classCounts: {'+': 3, '-': 4}"]
+classCounts: {'+': 3, '-': 4}
+previous_split: y"]
 	6 -> 7
 	10 [label="
 id: 10
-label: -"]
+label: -
+previous_split: g"]
 	6 -> 10
 	6 [label="
 id: 6
 attribute: color
 samples: 8
-classCounts: {'+': 3, '-': 5}"]
+classCounts: {'+': 3, '-': 5}
+previous_split: l"]
 	0 -> 6
 }

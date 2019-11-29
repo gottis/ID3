@@ -40,7 +40,7 @@ class ID3DecisionTreeClassifier:
             self.__dot.edge(str(parentid), str(node['id']))
             nodeString += "\n" + str(parentid) + " -> " + str(node['id'])
 
-        #print(nodeString)
+        # print(nodeString)
 
         return
 
@@ -108,47 +108,40 @@ class ID3DecisionTreeClassifier:
         if len(labels.keys()) == 1:
             root['label'] = next(iter(labels.keys()))
             return root
-        if len(attributes) == 0:
-            root['label'] = self.most_common_label(labels)
-            root['samples'] = len(data)
-            root['classCounts'] = labels
-            return root
-        split_attribute, partitions = self.find_split_attribute(data, attributes, classes)
-
-
-
-
-        root['attribute'] = split_attribute
         root['samples'] = len(data)
         root['classCounts'] = labels
+        if len(attributes) == 0:
+            root['label'] = self.most_common_label(labels)
+            return root
+        split_attribute, partitions = self.find_split_attribute(data, attributes, classes)
+        root['attribute'] = split_attribute
+
+        #root['previous_split'] = self.most_common_label(self.count_labels(data, attributes))
         self.add_node_to_graph(root)
 
         attributes_for_subtree = dict(attributes)
         del attributes_for_subtree[split_attribute]
 
         for partition in partitions:
-
-
             if len(partition) != 0:
                 branch = self.fit(partition, attributes_for_subtree, classes)
-                #branch['previous_split'] =
+                branch['previous_split'] = self.most_common_label(self.count_labels(partition, attributes[split_attribute]))
                 root['nodes'].append(branch)
                 self.add_node_to_graph(branch, root['id'])
-
         return root
 
 
+    def predict(self, node, x):
+        temp = []
+        for row in x:
+            temp.append(self.predictRec(node, row))
+        return tuple(temp)
 
-    def predict(self, data, tree, attributes):
-        predicted = list()
-
-        return predicted
-
-
-    def predict(self, node, tree, attributes):
-        if tree['nodes'] == None:
+    def predictRec(self, node, x):
+        if not node['nodes']:
+            print("gethere")
             return node['label']
         else:
-            for branch in tree['nodes']:
-                if branch['attribute'] in attributes:
-                    branch
+            for n in node['nodes']:
+                if n['previous_split'] in x:
+                    return self.predictRec(n, x)

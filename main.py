@@ -13,12 +13,11 @@ def main():
 
     num_examples = len(digits.data)
     num_split = int(0.7*num_examples)
-
     train_features = digits.data[:num_split]
     train_target = digits.target[:num_split]
     test_features = digits.data[num_split:]
     test_target = digits.target[num_split:]
-
+    print(train_features[0])
     cart = tree.DecisionTreeClassifier()
     myTree = cart.fit(train_features, train_target)
 
@@ -38,13 +37,15 @@ def main():
         temp = list(data[i])
         temp.append(target[i])
         my_way.append(temp)
+    #classes = (0,1,2,3,4,5,6,7,8,9)
 
     myTree = id3.fit(my_way, attributes, classes)
     print(myTree)
     plot = id3.make_dot_data()
     plot.render("testTree")
-    predicted = id3.predict(data2, myTree, attributes)
+    predicted = id3.predict(myTree, data2)
     print(predicted)
-
+    print(metrics.classification_report(target2, predicted))
+    print(metrics.confusion_matrix(target2, predicted))
 
 if __name__ == "__main__": main()
